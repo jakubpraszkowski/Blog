@@ -3,9 +3,14 @@ package com.kubuski.blog.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.kubuski.blog.dto.PostDto;
+import com.kubuski.blog.dto.PostResponse;
 import com.kubuski.blog.entity.Post;
 import com.kubuski.blog.exception.ResourceNotFoundException;
 import com.kubuski.blog.repository.PostRepository;
@@ -32,10 +37,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
+    public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
 
-        return posts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        Page<Post> posts = postRepository.findAll(pageable);
+
+        List<Post> listOfPosts = posts.getContent();
+
+        List<PostDto> content = listOfPosts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse(content, posts.getNumber(), posts.getSize(),
+                posts.getTotalElements(), posts.getTotalPages(), posts.isLast());
+
+        return postResponse;
     }
 
     @Override
@@ -64,7 +82,6 @@ public class PostServiceImpl implements PostService {
 
         postRepository.delete(post);
     }
-
 
     private PostDto mapToDto(Post post) {
         PostDto postDto = new PostDto();
