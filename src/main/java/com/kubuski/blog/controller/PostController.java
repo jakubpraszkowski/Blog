@@ -16,6 +16,8 @@ import com.kubuski.blog.dto.PostResponse;
 import com.kubuski.blog.service.PostService;
 import com.kubuski.blog.utils.AppConstants;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -26,7 +28,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
 
     }
@@ -46,13 +48,16 @@ public class PostController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@PathVariable(name = "id") Long id, @RequestBody PostDto postDto) {
-        return ResponseEntity.ok(postService.updatePost(id, postDto));
+    public ResponseEntity<PostDto> updatePost(@Valid @PathVariable(name = "id") Long id, @RequestBody PostDto postDto) {
+        PostDto postResponse = postService.updatePost(id, postDto);
+
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") Long id) {
         postService.deletePostById(id);
+
         return ResponseEntity.ok("Post deleted successfully");
     }
 }
