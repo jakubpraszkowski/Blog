@@ -39,7 +39,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
@@ -47,12 +47,14 @@ public class SecurityConfig {
 
     // @Bean
     // public UserDetailsService userDetailsService() {
-    //     UserDetails kubuski = User.builder().username("kubuski").password(passwordEncoder().encode("kubuski"))
-    //             .roles("USER").build();
+    // UserDetails kubuski =
+    // User.builder().username("kubuski").password(passwordEncoder().encode("kubuski"))
+    // .roles("USER").build();
 
-    //     UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
-    //             .build();
+    // UserDetails admin =
+    // User.builder().username("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
+    // .build();
 
-    //     return new InMemoryUserDetailsManager(kubuski, admin);
+    // return new InMemoryUserDetailsManager(kubuski, admin);
     // }
 }
