@@ -21,7 +21,6 @@ import com.kubuski.blog.service.PostService;
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
-
     private ModelMapper mapper;
 
     public PostServiceImpl(PostRepository postRepository, ModelMapper mapper) {

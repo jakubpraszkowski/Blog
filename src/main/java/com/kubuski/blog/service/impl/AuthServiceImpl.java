@@ -18,6 +18,7 @@ import com.kubuski.blog.entity.User;
 import com.kubuski.blog.exception.BlogAPIException;
 import com.kubuski.blog.repository.RoleRepository;
 import com.kubuski.blog.repository.UserRepository;
+import com.kubuski.blog.security.JwtTokenProvider;
 import com.kubuski.blog.service.AuthService;
 
 @Service
@@ -27,13 +28,15 @@ public class AuthServiceImpl implements AuthService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private JwtTokenProvider jwtTokenProvider;
 
     public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository,
-            RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+            RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -43,7 +46,9 @@ public class AuthServiceImpl implements AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return "User logged in successfully";
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        return token;
     }
 
     @Override
