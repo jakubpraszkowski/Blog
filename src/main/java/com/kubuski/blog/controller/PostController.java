@@ -1,5 +1,7 @@
 package com.kubuski.blog.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,7 +35,6 @@ public class PostController {
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
-
     }
 
     @GetMapping
@@ -64,5 +65,11 @@ public class PostController {
         postService.deletePostById(id);
 
         return ResponseEntity.ok("Post deleted successfully");
+    }
+
+    
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<PostDto>> getPostsByCategoryId(@PathVariable(name = "categoryId") Long categoryId) {
+        return ResponseEntity.ok(postService.getPostsByCategoryId(categoryId));
     }
 }

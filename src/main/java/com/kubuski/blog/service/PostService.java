@@ -1,5 +1,7 @@
 package com.kubuski.blog.service;
 
+import java.util.List;
+
 import com.kubuski.blog.dto.PostDto;
 import com.kubuski.blog.dto.PostResponse;
 
@@ -13,4 +15,6 @@ public interface PostService {
     PostDto updatePost(Long id, PostDto postDto);
 
     void deletePostById(Long id);
+
+    List<PostDto> getPostsByCategoryId(Long categoryId);
 }
