@@ -1,5 +1,6 @@
 package com.kubuski.blog.dto;
 
+import java.util.List;
 import java.util.Set;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,9 +9,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-@Schema(name = "PostDto", description = "DTO for creating a new post")
-public class PostDto {
-    @Schema(description = "Post id", example = "1") 
+public class PostDtoV2 {
+    @Schema(description = "Post id", example = "1")
     private Long id;
 
     @Schema(description = "Post title", example = "Spring Boot")
@@ -30,6 +30,5 @@ public class PostDto {
     @Schema(description = "Post author", example = "kubuski")
     private Set<CommentDto> comments;
 
-    @Schema(description = "Post category id", example = "1")
-    private Long categoryId;
+    private List<String> tags;
 }

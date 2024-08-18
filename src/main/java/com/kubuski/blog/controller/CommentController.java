@@ -18,7 +18,7 @@ import com.kubuski.blog.service.CommentService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/v1")
 public class CommentController {
     private CommentService commentService;
 

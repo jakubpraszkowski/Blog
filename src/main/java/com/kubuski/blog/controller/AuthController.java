@@ -13,7 +13,7 @@ import com.kubuski.blog.dto.RegisterDto;
 import com.kubuski.blog.service.AuthService;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
     private AuthService authService;
 
