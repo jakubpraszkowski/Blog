@@ -30,5 +30,6 @@ public class PostDtoV2 {
     @Schema(description = "Post author", example = "kubuski")
     private Set<CommentDto> comments;
 
+    @Schema(description = "Post tags", example = "[\"spring\", \"spring-boot\"]")
     private List<String> tags;
 }

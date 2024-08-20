@@ -56,21 +56,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    // @ExceptionHandler(MethodArgumentNotValidException.class)
-    // public ResponseEntity<Object>
-    // handleMethodArgumentNotValidException(MethodArgumentNotValidException ex,
-    // WebRequest request) {
-
-    // Map<String, String> errors = new HashMap<>();
-    // ex.getBindingResult().getFieldErrors().forEach(error -> {
-    // String fieldName = ((FieldError)error).getField();
-    // String message = error.getDefaultMessage();
-    // errors.put(fieldName, message);
-    // });
-
-    // return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    // }
-
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorDetails> handleAccessDeniedException(AccessDeniedException ex,
             WebRequest request) {
