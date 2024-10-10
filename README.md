@@ -54,9 +54,7 @@ Blog Application is a web application built with Spring Boot that allows users t
     ```
 
 ## 3. How to run tests
-    ```sh
     ./mvnm test
-    ```
 
 ## 4. System Architecture
 The application contains the following main components:
